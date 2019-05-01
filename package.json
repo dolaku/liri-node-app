@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/dolaku/liri-node-app",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "node-spotify-api": "^1.1.1",
+    "requirer": "0.0.4"
   }
 }

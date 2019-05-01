@@ -1,3 +1,3 @@
-// make connection to database
+var config = require('./config');
 
-// get data from API on the web
+
