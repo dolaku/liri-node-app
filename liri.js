@@ -1,4 +1,4 @@
-var env = require('dotenv').config();
+// var env = require('.env').config();
 var keys = require('./keys.js');
 var fs = require('fs');
 
@@ -11,7 +11,7 @@ var spotify = new Spotify(keys.spotify);
 // Inputs
 var args = process.argv;
 var command = args[2];
-var input;
+var input = '';
 
 // concatenate longer inputs
 if (args[3]) {
@@ -61,8 +61,20 @@ if (args[3]) {
         * Actors in the movie.
     */
 
-    // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+   function movieThis() {
+       var movieInput;
+       var URL = 'https://www.omdbapi.com/?t=' + movieInput + '&y=&plot=short&apikey=trilogy';
 
+    // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+    if (input = '') {
+        movieInput = 'Mr. Nobody';
+    } else {
+        movieInput = input;
+        axios.get(URL).then(function(res) {
+            console.log("The movie's rating is: " + response.data.imdbRating);
+        });
+    }
+}
 
 
 // Read/Write to random.txt
