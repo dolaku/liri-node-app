@@ -46,7 +46,22 @@ switch (command) {
 
 // If no song is provided then your program will default to "The Sign" by Ace of Base.
 
+function spotifyThis() {
 
+    spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        res = data.tracks.items[0];
+        console.log(`${div} Song Info ${div}`);
+        console.log(`Artist: ${res.artists[0].name}`);
+        console.log(`Song Name: ${res.name}`);
+        console.log(`Link: ${res.external_urls.spotify}`);
+        console.log(`Album Name: ${res.album.name}`);
+        console.log(div);
+
+    });
+}
 
 
 // Search Bands in Town for concerts
@@ -58,7 +73,10 @@ switch (command) {
 // Venue location
 // Date of the Event (moment to format as "MM/DD/YYYY")
 
+function concertThis() {
+    URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
 
+}
 
 
 // Search OMDB for movies
@@ -83,10 +101,11 @@ function movieThis() {
         args = 'mr+nobody';
     }
 
-    URL = 'https://www.omdbapi.com/?t=' + args + '&y=&plot=short&apikey=trilogy';
+    URL = `https://www.omdbapi.com/?t=${args}&y=&plot=short&apikey=trilogy`;
 
 
-    axios.get(URL)
+    axios
+        .get(URL)
         .then(function (res) {
             var data = res.data;
             // console.log(res);
@@ -97,13 +116,13 @@ function movieThis() {
             }
 
             console.log(`\r\n${div} Movie Info ${div}`);
-            console.log(`  Title: ${data.Title}`);
-            console.log(`  Year: ${data.Year}`);
-            console.log(`  IMDB Rating: ${data.imdbRating}`);
-            console.log(`  Rotten Tomatoes Rating: ${data.Ratings[1].Value}`);
-            console.log(`  Language: ${data.Language}`);
-            console.log(`  Plot: ${data.Plot}`);
-            console.log(`  Actors: ${data.Actors}`);
+            console.log(`Title: ${data.Title}`);
+            console.log(`Year: ${data.Year}`);
+            console.log(`IMDB Rating: ${data.imdbRating}`);
+            console.log(`Rotten Tomatoes Rating: ${data.Ratings[1].Value}`);
+            console.log(`Language: ${data.Language}`);
+            console.log(`Plot: ${data.Plot}`);
+            console.log(`Actors: ${data.Actors}`);
             console.log(div);
         })
 }
