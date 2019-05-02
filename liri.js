@@ -1,9 +1,10 @@
-// var env = require('.env').config();
+require('dotenv').config();
 var keys = require('./keys.js');
+var axios = require("axios");
 var fs = require('fs');
 
 // NPMs
-var spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 
 // Keys
 var spotify = new Spotify(keys.spotify);
@@ -60,21 +61,25 @@ if (args[3]) {
         * Plot of the movie.
         * Actors in the movie.
     */
+    if (command === 'movie-this') {
+        movieThis();
+    }
+
 
    function movieThis() {
        var movieInput;
        var URL = 'https://www.omdbapi.com/?t=' + movieInput + '&y=&plot=short&apikey=trilogy';
 
-    // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-    if (input = '') {
-        movieInput = 'Mr. Nobody';
-    } else {
-        movieInput = input;
-        axios.get(URL).then(function(res) {
-            console.log("The movie's rating is: " + response.data.imdbRating);
-        });
+        // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+        if (input = '') {
+            movieInput = 'Mr. Nobody';
+        } else {
+            movieInput = input;
+            axios.get(URL).then(function(res) {
+                console.log("The movie's rating is: " + res.data.imdbRating);
+            });
+        }
     }
-}
 
 
 // Read/Write to random.txt
