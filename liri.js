@@ -31,7 +31,7 @@ switch (command) {
         doThis();
         break;
     default:
-        console.log("Sorry, I don't know that one");
+        console.log("Sorry, I don't know that one.");
 }
 
 
@@ -44,23 +44,39 @@ switch (command) {
 // preview link of song from spotify
 // album name
 
-// If no song is provided then your program will default to "The Sign" by Ace of Base.
 
 function spotifyThis() {
 
-    spotify.search({ type: 'track', query: 'All the Small Things', limit: 1 }, function (err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
-        }
-        res = data.tracks.items[0];
-        console.log(`${div} Song Info ${div}`);
-        console.log(`Artist: ${res.artists[0].name}`);
-        console.log(`Song Name: ${res.name}`);
-        console.log(`Link: ${res.external_urls.spotify}`);
-        console.log(`Album Name: ${res.album.name}`);
-        console.log(div);
+    // If no song is provided then your program will default to "The Sign" by Ace of Base.
+    if (args === '') {
+        // https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB
+        // https://open.spotify.com/track/0hrBpAOgrt8RXigk83LLNE
+        // https://api.spotify.com/v1/tracks/
+        spotify
+            .request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE')
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (err) {
+                console.error('Error occurred: ' + err);
+            });
 
-    });
+    } else {
+
+        spotify.search({ type: 'track', query: args, limit: 1 }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            res = data.tracks.items[0];
+            console.log(`${div} Song Info ${div}`);
+            console.log(`Artist: ${res.artists[0].name}`);
+            console.log(`Song Name: ${res.name}`);
+            console.log(`Link: ${res.external_urls.spotify}`);
+            console.log(`Album Name: ${res.album.name}`);
+            console.log(div);
+
+        });
+    }
 }
 
 
@@ -102,7 +118,6 @@ function movieThis() {
     }
 
     URL = `https://www.omdbapi.com/?t=${args}&y=&plot=short&apikey=trilogy`;
-
 
     axios
         .get(URL)
