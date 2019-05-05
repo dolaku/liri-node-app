@@ -55,7 +55,12 @@ function spotifyThis() {
         spotify
             .request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE')
             .then(function (data) {
-                console.log(data);
+                console.log(`\n${div} Song Info ${div}`);
+                console.log(`Artist: ${data.artists[0].name}`);
+                console.log(`Song Name: ${data.name}`);
+                console.log(`Link: ${data.external_urls.spotify}`);
+                console.log(`Album Name: ${data.album.name}`);
+                console.log(div);
             })
             .catch(function (err) {
                 console.error('Error occurred: ' + err);
@@ -68,7 +73,7 @@ function spotifyThis() {
                 return console.log('Error occurred: ' + err);
             }
             res = data.tracks.items[0];
-            console.log(`${div} Song Info ${div}`);
+            console.log(`\n${div} Song Info ${div}`);
             console.log(`Artist: ${res.artists[0].name}`);
             console.log(`Song Name: ${res.name}`);
             console.log(`Link: ${res.external_urls.spotify}`);
