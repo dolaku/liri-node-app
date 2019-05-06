@@ -35,17 +35,17 @@ switch (command) {
 }
 
 
-// Search Spotify for songs
-// COMMAND: node liri.js spotify-this-song '<song name here>'
-
-// Show:
-// artist
-// Song name
-// preview link of song from spotify
-// album name
-
 
 function spotifyThis() {
+
+    // Search Spotify for songs
+    // COMMAND: node liri.js spotify-this-song '<song name here>'
+
+    // Show:
+    // artist
+    // Song name
+    // preview link of song from spotify
+    // album name
 
     // If no song is provided then your program will default to "The Sign" by Ace of Base.
     if (args === '') {
@@ -85,37 +85,58 @@ function spotifyThis() {
 }
 
 
-// Search Bands in Town for concerts
-// COMMAND: node liri.js concert-this <artist/band name here>
-
-// This will search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist and render the following information about each event to the terminal:
-
-// Name of the venue
-// Venue location
-// Date of the Event (moment to format as "MM/DD/YYYY")
-
 function concertThis() {
-    URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
+    // Search Bands in Town for concerts
+    // COMMAND: node liri.js concert-this <artist/band name here>
 
+    // This will search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist and render the following information about each event to the terminal:
+
+    // Name of the venue
+    // Venue location
+    // Date of the Event (moment to format as "MM/DD/YYYY")
+
+    URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
+    
+    if (!argument) {
+        console.log("enter an argument")
+    }
+
+    request(queryUrl, function (error, response, data) {
+
+        if (!error) {
+            var data = JSON.parse(data);
+
+            for (var i = 0; i < data.length; i++) {
+
+                console.log(data[i].venue.name);
+                console.log(data[i].venue.city + ", " + data[i].venue.country);
+                console.log(moment(data[i].datetime).format("L"));
+                console.log("____________________")
+            }
+        }
+        else {
+            console.log("error");
+        }
+    })
 }
 
 
-// Search OMDB for movies
-// COMMAND: node liri.js movie-this '<movie name here>'
-
-// This will output the following information to your terminal/bash window:
-/*
-    * Title of the movie.
-    * Year the movie came out.
-    * IMDB Rating of the movie.
-    * Rotten Tomatoes Rating of the movie.
-    * Country where the movie was produced.
-    * Language of the movie.
-    * Plot of the movie.
-    * Actors in the movie.
-*/
 
 function movieThis() {
+    // Search OMDB for movies
+    // COMMAND: node liri.js movie-this '<movie name here>'
+
+    // This will output the following information to your terminal/bash window:
+    /*
+        * Title of the movie.
+        * Year the movie came out.
+        * IMDB Rating of the movie.
+        * Rotten Tomatoes Rating of the movie.
+        * Country where the movie was produced.
+        * Language of the movie.
+        * Plot of the movie.
+        * Actors in the movie.
+    */
 
     // If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
     if (args === '') {
@@ -148,5 +169,9 @@ function movieThis() {
 }
 
 
-// Read/Write to random.txt
-// COMMAND: node liri.js do-what-it-says
+function doThis () {
+
+    // Read/Write to random.txt
+    // COMMAND: node liri.js do-what-it-says
+
+}
