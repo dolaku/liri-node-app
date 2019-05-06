@@ -1,6 +1,7 @@
 require('dotenv').config();
 var keys = require('./keys.js');
 var axios = require("axios");
+var moment = require('moment');
 var fs = require('fs');
 
 // NPMs
@@ -31,6 +32,7 @@ switch (command) {
         doThis();
         break;
     default:
+        console.log(`\r\n${div}`);
         console.log("Sorry, I don't know that one.");
 }
 
@@ -63,6 +65,7 @@ function spotifyThis() {
                 console.log(div);
             })
             .catch(function (err) {
+                console.log(`\r\n${div}`);
                 console.error('Error occurred: ' + err);
             });
 
@@ -95,29 +98,44 @@ function concertThis() {
     // Venue location
     // Date of the Event (moment to format as "MM/DD/YYYY")
 
-    URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
-    
-    if (!argument) {
-        console.log("enter an argument")
+    URL = "https://rest.bandsintown.com/artists/" + args + "/events?app_id=codingbootcamp"
+
+    if (args === '') {
+        console.log(`\r\n${div}`);
+        console.log("Please enter an artist.");
+    } else {
+
+        axios
+            .get(URL)
+            .then(function (res) {
+
+                if (res.status !== 200) {
+                    // when status is not OK, return the error message
+                    console.log(`\r\n${div}`);
+                    console.log(`Error Code: ${res.status}:`);
+                    console.log(`${res.statusText}`);
+                } else if (res.data.length === 0) {
+                    // when there is no upcoming concerts
+                    console.log(`\r\n${div}`);
+                    console.log(`No upcoming concerts found`);
+                }
+
+                for ( var i = 0; i < res.data.length; i++) {
+                    var data = res.data;
+                    var date = moment(data[i].datetime).format("MM/DD/YYYY");
+
+                    console.log(`\r\n${div} Concert Info ${div}`);
+                    console.log(`Venue: ${data[i].venue.name}`);
+                    if (data[i].venue.region !== '') {
+                        console.log(`Location: ${data[i].venue.city}, ${data[i].venue.region}`);
+                    } else {
+                        console.log(`Location: ${data[i].venue.city}, ${data[i].venue.country}`);
+                    }
+                    console.log(`Date: ${date}`);
+                }
+
+            });
     }
-
-    request(queryUrl, function (error, response, data) {
-
-        if (!error) {
-            var data = JSON.parse(data);
-
-            for (var i = 0; i < data.length; i++) {
-
-                console.log(data[i].venue.name);
-                console.log(data[i].venue.city + ", " + data[i].venue.country);
-                console.log(moment(data[i].datetime).format("L"));
-                console.log("____________________")
-            }
-        }
-        else {
-            console.log("error");
-        }
-    })
 }
 
 
@@ -152,6 +170,7 @@ function movieThis() {
             // console.log(res);
 
             if (data.Response === 'False') {
+                console.log(`\r\n${div}`);
                 console.log(data.Error);
                 return;
             }
@@ -169,7 +188,7 @@ function movieThis() {
 }
 
 
-function doThis () {
+function doThis() {
 
     // Read/Write to random.txt
     // COMMAND: node liri.js do-what-it-says
