@@ -81,7 +81,6 @@ function spotifyThis() {
             console.log(`Song Name: ${res.name}`);
             console.log(`Link: ${res.external_urls.spotify}`);
             console.log(`Album Name: ${res.album.name}`);
-            console.log(div);
 
         });
     }
@@ -120,7 +119,7 @@ function concertThis() {
                     console.log(`No upcoming concerts found`);
                 }
 
-                for ( var i = 0; i < res.data.length; i++) {
+                for (var i = 0; i < res.data.length; i++) {
                     var data = res.data;
                     var date = moment(data[i].datetime).format("MM/DD/YYYY");
 
@@ -183,7 +182,6 @@ function movieThis() {
             console.log(`Language: ${data.Language}`);
             console.log(`Plot: ${data.Plot}`);
             console.log(`Actors: ${data.Actors}`);
-            console.log(div);
         })
 }
 
@@ -192,5 +190,27 @@ function doThis() {
 
     // Read/Write to random.txt
     // COMMAND: node liri.js do-what-it-says
+    fs.readFile('random.txt', 'utf8', function (err, data) {
 
+        // log error if present
+        if (err) {
+            console.log(`\r\n${div}`);
+            console.log(err);
+        }
+
+        // 0 index = command
+        // 1 index = argument
+        var arr = data.split(",");
+        command = arr[0];
+        args = arr[1].slice(1, -1);
+
+        if (command === "spotify-this-song") {
+            spotifyThis();
+        } else if (command === "movie-this") {
+            movieThis();
+        } else if (command === "concert-this") {
+            concertThis();
+        }
+
+    })
 }
