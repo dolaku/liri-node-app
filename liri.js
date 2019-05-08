@@ -51,9 +51,6 @@ function spotifyThis() {
 
     // If no song is provided then your program will default to "The Sign" by Ace of Base.
     if (args === '') {
-        // https://open.spotify.com/album/5UwIyIyFzkM7wKeGtRJPgB
-        // https://open.spotify.com/track/0hrBpAOgrt8RXigk83LLNE
-        // https://api.spotify.com/v1/tracks/
         spotify
             .request('https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE')
             .then(function (data) {
@@ -62,7 +59,6 @@ function spotifyThis() {
                 console.log(`Song Name: ${data.name}`);
                 console.log(`Link: ${data.external_urls.spotify}`);
                 console.log(`Album Name: ${data.album.name}`);
-                console.log(div);
             })
             .catch(function (err) {
                 console.log(`\r\n${div}`);
